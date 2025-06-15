@@ -16,12 +16,12 @@ public class Contactos {
     public static final String pais = "pais";
 
     // DDL CREATE
-    public static final String CreateTableContacto = "CREATE TABLE " + TablaContacto + " ( " +
-            id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            nombre + " TEXT, " +
-            nota + " TEXT, " +
-            telefono + " TEXT"+
-            pais+"TEXT, )";
+    public static final String CreateTableContacto = "CREATE TABLE contacto (" +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "nombre TEXT, " +
+            "pais TEXT, " +
+            "telefono TEXT, " +
+            "nota TEXT)";
 
     // DROP TABLE
     public static final String DROPTableContacto = "DROP TABLE IF EXISTS " + TablaContacto;

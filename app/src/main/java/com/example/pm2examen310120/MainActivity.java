@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.ArrayAdapter;
+
 
 
 import androidx.activity.EdgeToEdge;
@@ -53,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
         salvarContacto = findViewById(R.id.salvarContacto);
         contactoSalvado = findViewById(R.id.contactoSalvado);
         usarcamara = findViewById(R.id.usarcamara);
+
+
+        String[] paises = {"Honduras", "Guatemala", "Nicaragua", "El Salvador"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, paises);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        pais.setAdapter(adapter);
 
         salvarContacto.setOnClickListener(view -> agregarContacto());
         usarcamara.setOnClickListener(view -> Permisos());
@@ -103,6 +111,20 @@ public class MainActivity extends AppCompatActivity {
         ConexionSQLite conexion = new ConexionSQLite(this, Contactos.NameDB, null, 1);
         SQLiteDatabase db = conexion.getWritableDatabase();
 
+
+        Object paisSeleccionado = pais.getSelectedItem();
+        if (paisSeleccionado == null) {
+            Toast.makeText(this, "Seleccione un país", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (nombre.getText().toString().trim().isEmpty() ||
+                telefono.getText().toString().trim().isEmpty() ||
+                nota.getText().toString().trim().isEmpty()) {
+
+            Toast.makeText(this, "Complete todos los campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         ContentValues values = new ContentValues();
         values.put(Contactos.nombre, nombre.getText().toString());
         values.put(Contactos.nota, nota.getText().toString());
@@ -114,6 +136,13 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this,
                 "Contacto ingresado con éxito. ID: " + resultado,
                 Toast.LENGTH_LONG).show();
+
+        nombre.setText("");
+        telefono.setText("");
+        nota.setText("");
+        pais.setSelection(0);
+        imageView.setImageResource(0);
+
 
         db.close();
     }
