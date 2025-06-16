@@ -3,6 +3,7 @@ package com.example.pm2examen310120;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
@@ -10,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.graphics.BitmapFactory;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +21,7 @@ public class ListActivity extends AppCompatActivity {
 
     private String contactoSeleccionadoId = null;
     private TextView contactoSeleccionadoView = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +31,10 @@ public class ListActivity extends AppCompatActivity {
         Button btnEliminarContactos = findViewById(R.id.btnEliminarContactos);
         Button btnEditarContacto = findViewById(R.id.btnActualizarContactos);
         Button btnAtras = findViewById(R.id.btnAtras);
-        btnAtras.setOnClickListener(v -> finish());
         Button btnCompartirContacto = findViewById(R.id.btnCompartirContacto);
+        Button btnVerImagen = findViewById(R.id.btnVerImagen); // Botón agregado
 
-
+        btnAtras.setOnClickListener(v -> finish());
 
         ConexionSQLite conexion = new ConexionSQLite(this, Contactos.NameDB, null, 1);
         SQLiteDatabase db = conexion.getReadableDatabase();
@@ -57,16 +57,13 @@ public class ListActivity extends AppCompatActivity {
             contacto.setBackgroundColor(i % 2 == 0 ? Color.WHITE : Color.parseColor("#E3F2FD"));
             contacto.setTag(id);
 
-
             contacto.setOnClickListener(v -> {
                 if (contactoSeleccionadoView != null) {
-
                     contactoSeleccionadoView.setBackgroundColor(Color.WHITE);
                 }
 
                 contactoSeleccionadoId = (String) v.getTag();
                 contactoSeleccionadoView = (TextView) v;
-
                 contactoSeleccionadoView.setBackgroundColor(Color.parseColor("#ADD8E6"));
             });
 
@@ -76,7 +73,6 @@ public class ListActivity extends AppCompatActivity {
 
         cursor.close();
         db.close();
-
 
         btnEliminarContactos.setOnClickListener(v -> {
             if (contactoSeleccionadoId != null && contactoSeleccionadoView != null) {
@@ -91,7 +87,6 @@ public class ListActivity extends AppCompatActivity {
 
         btnEditarContacto.setOnClickListener(v -> {
             if (contactoSeleccionadoId != null) {
-
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("id", contactoSeleccionadoId);
                 startActivity(intent);
@@ -99,6 +94,7 @@ public class ListActivity extends AppCompatActivity {
                 Toast.makeText(this, "Selecciona un contacto primero", Toast.LENGTH_SHORT).show();
             }
         });
+
         btnCompartirContacto.setOnClickListener(v -> {
             if (contactoSeleccionadoId != null) {
                 ConexionSQLite conexion2 = new ConexionSQLite(this, Contactos.NameDB, null, 1);
@@ -135,8 +131,36 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
+        btnVerImagen.setOnClickListener(v -> {
+            if (contactoSeleccionadoId != null) {
+                ConexionSQLite conexion2 = new ConexionSQLite(this, Contactos.NameDB, null, 1);
+                SQLiteDatabase db2 = conexion2.getReadableDatabase();
 
+                Cursor cursor2 = db2.rawQuery("SELECT imagen FROM contacto WHERE id = ?", new String[]{contactoSeleccionadoId});
 
+                if (cursor2.moveToFirst()) {
+                    byte[] imagenBytes = cursor2.getBlob(0);
+                    if (imagenBytes != null) {
+                        ImageView imageView = new ImageView(this);
+                        imageView.setImageBitmap(BitmapFactory.decodeByteArray(imagenBytes, 0, imagenBytes.length));
+
+                        new android.app.AlertDialog.Builder(this)
+                                .setView(imageView)
+                                .setPositiveButton("Cerrar", null)
+                                .show();
+                    } else {
+                        Toast.makeText(this, "Este contacto no tiene imagen", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(this, "No se encontró la imagen del contacto", Toast.LENGTH_SHORT).show();
+                }
+
+                cursor2.close();
+                db2.close();
+            } else {
+                Toast.makeText(this, "Selecciona un contacto primero", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void eliminarContacto(String id) {
@@ -149,6 +173,5 @@ public class ListActivity extends AppCompatActivity {
         db.delete("contacto", whereClause, whereArgs);
         db.close();
     }
-
-
 }
+
