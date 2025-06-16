@@ -6,18 +6,19 @@ public class Contacto {
     private String nombre;
     private String nota;
     private String telefono;
-
+    private byte[] imagen;
     private String pais;
 
     public Contacto() {
 }
 
-    public Contacto(int id, String nombre,String pais, String nota, String telefono) {
+    public Contacto(int id, String nombre,String pais, String nota, String telefono,byte[] imagen) {
         this.id = id;
         this.nombre = nombre;
         this.nota = nota;
         this.telefono = telefono;
         this.pais = pais;
+        this.imagen = imagen;
     }
 
     public int getId() {
@@ -58,6 +59,15 @@ public class Contacto {
 
     public void setPais(String pais) {
         this.pais= pais;
+    }
+
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }
 
 }

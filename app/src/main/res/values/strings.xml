@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">PM2Examen310120</string>
+    <string name="btnAtras">Atrás</string>
+    <string name="btnCompartirContactos">Compartir</string>
+    <string name="btnVerImagen">Ver Imagen</string>
+    <string name="btnEliminarContactos">Eliminar</string>
+    <string name="btnActualizarContactos">Actualizar</string>
+
+
 </resources>

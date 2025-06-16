@@ -28,6 +28,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.ByteArrayOutputStream;
+
 import configuracion.ConexionSQLite;
 import configuracion.Contactos;
 
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int peticion_camara = 100;
     private static final int peticion_foto = 101;
+
+    private Bitmap imagenBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         pais.setAdapter(adapter);
 
+        contactoSalvado.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, ListActivity.class);
+            startActivity(intent);
+        });
         salvarContacto.setOnClickListener(view -> agregarContacto());
         usarcamara.setOnClickListener(view -> Permisos());
     }
@@ -102,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == peticion_foto && resultCode == RESULT_OK && data != null) {
             Bundle extras = data.getExtras();
-            Bitmap image = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(image);
+            imagenBitmap = (Bitmap) extras.get("data");
+            imageView.setImageBitmap(imagenBitmap);
         }
     }
 
@@ -131,6 +139,13 @@ public class MainActivity extends AppCompatActivity {
         values.put(Contactos.pais, pais.getSelectedItem().toString());
         values.put(Contactos.telefono, telefono.getText().toString());
 
+        if (imagenBitmap != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imagenBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            values.put(Contactos.imagen, byteArray);
+        }
+
         long resultado = db.insert(Contactos.TablaContacto, null, values);
 
         Toast.makeText(this,
@@ -142,9 +157,13 @@ public class MainActivity extends AppCompatActivity {
         nota.setText("");
         pais.setSelection(0);
         imageView.setImageResource(0);
+        imagenBitmap = null;
+
+
 
 
         db.close();
     }
+
 }
 

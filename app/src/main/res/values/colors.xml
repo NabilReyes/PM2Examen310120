@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="verdeFondo">#A5D6A7</color>
+    Color.parseColor("#FFFFFF") :  // Blanco
+    Color.parseColor("#E3F2FD"));  // Azul
 </resources>

@@ -10,6 +10,7 @@ public class Contactos {
 
     // Campos de la tabla
     public static final String id = "id";
+    public static final String imagen = "imagen";
     public static final String nombre = "nombre";
     public static final String telefono = "telefono";
     public static final String nota = "nota";
@@ -21,7 +22,9 @@ public class Contactos {
             "nombre TEXT, " +
             "pais TEXT, " +
             "telefono TEXT, " +
-            "nota TEXT)";
+            "nota TEXT, " +
+            "imagen BLOB)";
+
 
     // DROP TABLE
     public static final String DROPTableContacto = "DROP TABLE IF EXISTS " + TablaContacto;
