@@ -159,9 +159,6 @@ public class MainActivity extends AppCompatActivity {
         imageView.setImageResource(0);
         imagenBitmap = null;
 
-
-
-
         db.close();
     }
 
