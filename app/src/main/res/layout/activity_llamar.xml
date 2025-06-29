@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Botón arriba a la izquierda -->
+    <Button
+        android:id="@+id/btnAtras"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Atrás"
+        android:layout_gravity="start|top"
+        android:layout_margin="16dp"/>
+
+    <!-- Contenido centrado -->
+    <LinearLayout
+        android:id="@+id/btnAtras"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <EditText
+            android:id="@+id/txtTelefono"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="Ingrese número a llamar"
+            android:inputType="phone" />
+
+        <Button
+            android:id="@+id/btnLlamar"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Llamar" />
+    </LinearLayout>
+
+</FrameLayout>

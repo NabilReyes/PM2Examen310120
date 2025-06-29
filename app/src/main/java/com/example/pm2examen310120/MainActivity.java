@@ -77,6 +77,14 @@ public class MainActivity extends AppCompatActivity {
             salvarContacto.setText("Actualizar");
             cargarDatosContacto(contactoId);
         }
+
+        // 👉 Fragmento agregado: Ir a pantalla de llamadas
+        Button btnLlamar = findViewById(R.id.btnLlamar);
+
+        btnLlamar.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, LlamarActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void Permisos() {

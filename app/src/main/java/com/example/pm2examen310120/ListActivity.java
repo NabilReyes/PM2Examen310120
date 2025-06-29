@@ -32,7 +32,7 @@ public class ListActivity extends AppCompatActivity {
         Button btnEditarContacto = findViewById(R.id.btnActualizarContactos);
         Button btnAtras = findViewById(R.id.btnAtras);
         Button btnCompartirContacto = findViewById(R.id.btnCompartirContacto);
-        Button btnVerImagen = findViewById(R.id.btnVerImagen); // Botón agregado
+        Button btnVerImagen = findViewById(R.id.btnVerImagen);
 
         btnAtras.setOnClickListener(v -> finish());
 
@@ -65,6 +65,11 @@ public class ListActivity extends AppCompatActivity {
                 contactoSeleccionadoId = (String) v.getTag();
                 contactoSeleccionadoView = (TextView) v;
                 contactoSeleccionadoView.setBackgroundColor(Color.parseColor("#ADD8E6"));
+
+                // 👉 Abrir LlamarActivity y enviar el número
+                Intent intent = new Intent(this, LlamarActivity.class);
+                intent.putExtra("telefono", telefono);
+                startActivity(intent);
             });
 
             contenedor.addView(contacto);
@@ -174,4 +179,3 @@ public class ListActivity extends AppCompatActivity {
         db.close();
     }
 }
-
