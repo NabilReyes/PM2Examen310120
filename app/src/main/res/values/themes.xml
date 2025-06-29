@@ -1,9 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme -->
     <style name="Base.Theme.PM2Examen310120" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Splash screen branding image -->
+        <item name="android:windowSplashScreenBrandingImage">@drawable/alex</item>
+
+        <!-- Optional: background color during splash -->
+        <item name="android:windowSplashScreenBackground">@color/white</item>
     </style>
 
-    <style name="Theme.PM2Examen310120" parent="Base.Theme.PM2Examen310120" />
+    <style name="Theme.PM2Examen310120" parent="Base.Theme.PM2Examen310120"/>
 </resources>
